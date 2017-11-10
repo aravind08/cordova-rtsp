@@ -2,9 +2,9 @@
 
 var exec = require('cordova/exec');
 
-var rtspVideo = {};
+function rtspVideo(){};
 
-rtspVideo.play = function(uri, success, failure) {
+rtspVideo.prototype.play = function(uri, success, failure) {
     // fire
     exec(
         success,
@@ -15,7 +15,7 @@ rtspVideo.play = function(uri, success, failure) {
     );
 };
 
-rtspVideo.pause = function(success, failure) {
+rtspVideo.prototype.pause = function(success, failure) {
     // fire
     exec(
         success,
@@ -26,7 +26,7 @@ rtspVideo.pause = function(success, failure) {
     );
 };
 
-rtspVideo.resume = function(success, failure) {
+rtspVideo.prototype.resume = function(success, failure) {
     // fire
     exec(
         success,
@@ -37,7 +37,7 @@ rtspVideo.resume = function(success, failure) {
     );
 };
 
-rtspVideo.stop = function(success, failure) {
+rtspVideo.prototype.stop = function(success, failure) {
     // fire
     exec(
         success,
@@ -48,4 +48,13 @@ rtspVideo.stop = function(success, failure) {
     );
 };
 
-module.exports = rtspVideo;
+
+rtspVideo.install = function () {
+	if (!window.plugins) {
+		window.plugins = {};
+	}
+	window.plugins.rtspVideo = new rtspVideo();
+	return window.plugins.rtspVideo;
+};
+
+cordova.addConstructor(rtspVideo.install);
